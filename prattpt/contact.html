@@ -69,7 +69,7 @@
                   <p class="accent">Fri</p><p class="large">8:00am - 2:00pm</p>
                 </li>
               </ul>
-              <p>Closed 1:00-2:00pm daily except Friday</p> 
+              <p>Closed 1:00-2:00pm daily except Friday</p>
               <ul class="contact">
                 <li>
                   <h4>Call</h4>
@@ -83,7 +83,7 @@
                   <h4>Email</h4>
                   <p class="accent"><a href="mailto:therapy@prattpt.com">therapy@prattpt.com</a></p>
                 </li>
-              </ul>              
+              </ul>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@
         <div class="grid-x grid-padding-x">
           <div class="small-12 medium-6 cell">
             <h3>Schedule an Appointment</h3>
-            <form data-abide action="http://formspree.io/eads.meredith@gmail.com" method="POST">
+            <form id="cheese" data-abide action="https://formspree.io/beckykatehall@gmail.com" method="POST">
               <div data-abide-error class="alert callout" style="display: none;">
                 <p><i class="fi-alert"></i>Please fill out all form fields.</p>
               </div>
@@ -212,19 +212,31 @@
         // form validation passed, form will submit if submit event not returned false
         .on("formvalid.zf.abide", function(ev,frm) {
           console.log("Form id "+frm.attr('id')+" is valid");
-          // ajax post form 
+          // ajax post form
         })
         // to prevent form from submitting upon successful validation
         .on("submit", function(ev) {
           ev.preventDefault();
           console.log("Submit for form id "+ev.target.id+" intercepted");
         });
+
+        // just adding this listener allows the native submit to fire... not sure why
+        // .on('valid.fndtn.abide',function(){
+        //   console.log('valid.fndtn.abide fired');
+        // });
+        
       // You can bind field or form event selectively
       $("#foo").on("invalid.zf.abide", function(ev,el) {
         alert("Input field foo is invalid");
       });
-      $("#bar").on("formvalid.zf.abide", function(ev,frm) {
-        alert("Form is valid, finally!");
+      $("#cheese").on("formvalid.zf.abide", function(ev,frm) {
+        console.log("Submitting the form");
+        $.ajax({
+            url: "https://formspree.io/beckykatehall@gmail.com",
+            method: "POST",
+            data: $('#cheese').serialize(),
+            datatype: 'json'
+        });
         // do something perhaps
       });
     </script>
